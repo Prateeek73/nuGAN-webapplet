@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-#################################
-# -------Import libraries--------#
-#################################
 import os
 import time
 import random
@@ -28,8 +25,6 @@ random.seed(rseed)
 np.random.seed(rseed)
 torch.manual_seed(rseed)
 torch.cuda.manual_seed_all(rseed)
-
-
 t1 = time.time()
 
 #################################

@@ -40,11 +40,7 @@ conda activate nugan
 
 ## Run
 
-Modify train params inside run.sh
-Run as `bash run.sh`
-
-
-## Outputs
+Modify train params inside run.sh. Run as `bash run.sh`
 
 During training, the following directories are created inside save_path:
 ```text
@@ -66,7 +62,7 @@ save_path/
 └── args.txt
 ```
 
-## What's not standard practice
+## Improvements
 
 - Critic contains `BatchNorm` unlike standard WGAN practice.
 - Critic is updated using Wasserstein loss with gradient penalty and spectral loss.
@@ -85,5 +81,3 @@ save_path/
 - Fixed noise and conditioning vectors are used for periodic sample generation.
 
 - Checkpoints are saved based on lowest running losses on Generator, Generator+Critic, and the average binned P(k) loss between real and fake data batches of `G_samples` samples.
-
-- 

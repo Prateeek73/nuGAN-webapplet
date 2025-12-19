@@ -33,7 +33,7 @@ python3 train.py \
     --scheduling=yes \
     --scheduling_freq=6000 \
     --lr_multiplier=0.5 \
-    --data_path=/data/kaushal/nugan/data/scaled_density_contrast_maps_all.npy \
-    --conds_path=/data/kaushal/nugan/data/neutrino_masses_all.npy \
-    --save_path=/data/kaushal/nugan/runs/R4 \
+    --data_path=./data/scaled_density_contrast_maps.npy \
+    --conds_path=./data/neutrino_masses.npy \
+    --save_path=./run1 \
     &> train.log
