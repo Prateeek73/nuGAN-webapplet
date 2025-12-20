@@ -7,7 +7,7 @@ This is a **PyTorch implementation of a conditional Wasserstein GAN (WGAN-GP)** 
 
 ---
 
-## Overview
+## Overview and Results
 
 The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 - Learns from 2D cosmological density maps
@@ -16,6 +16,19 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 - Incorporates a power-spectrum–based spectral loss
 - Saves best models based on multiple criteria (G loss, G+D loss, power spectrum loss)
 
+<p align="center">
+  <img src="results/graphs/sample_maps_comparison.png" width="1500">
+  <br>
+  <em>A comparison of actual and nuGAN-generated density contrast maps</em>
+</p>
+
+<br><br>
+
+<p align="center">
+  <img src="results/graphs/avg_pk_over_1000_maps.png" width="1500">
+  <br>
+  <em>Power spectrum comparison of actual and nuGAN-generated density contrast maps averaged over 1000 maps</em>
+</p>
 ---
 
 ## Repository Structure
