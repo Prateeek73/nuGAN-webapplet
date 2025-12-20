@@ -80,4 +80,4 @@ save_path/
 
 - Fixed noise and conditioning vectors are used for periodic sample generation.
 
-- Checkpoints are saved based on lowest running losses on Generator, Generator+Critic, and the average binned P(k) loss between real and fake data batches of `G_samples` samples.
+- Checkpoints are saved based on lowest running losses on Generator, Generator+Critic, and the average binned P(k) loss between real and fake data (invere-scaled) batches of `G_samples` samples.

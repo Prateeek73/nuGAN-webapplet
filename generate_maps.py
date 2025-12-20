@@ -1,5 +1,12 @@
-from libraries import *
-from utils import draw_latent_z, get_stats
+import os
+import time
+import numpy as np
+import torch
+import matplotlib.pyplot as plt
+from utils import get_stats, draw_latent_z
+from models import nuGANGenerator
+from collections import OrderedDict
+t1 = time.time()
 
 nu = 0.4 #--neutrino mass
 num_maps = 75 #--number of 2D maps to generate
@@ -12,7 +19,13 @@ save_path = f"./results/generated_maps/nu_{nu}"
 os.makedirs(save_path, exist_ok=True)
 device = "cuda:0" #---gpu device
 
-model = torch.load(model_path, map_location=device)
+model = nuGANGenerator(nz=200, mchn=2).to(device)
+state_dict = torch.load(model_path, weights_only=True)
+new_state_dict = OrderedDict()
+for k, v in state_dict.items():
+    new_key = k.replace("module.", "")
+    new_state_dict[new_key] = v
+model.load_state_dict(new_state_dict)
 model.eval()
 print("Model loaded")
 

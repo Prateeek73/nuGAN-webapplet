@@ -334,3 +334,21 @@ def get_avg_pk_loss(real, fake, nbins=100, a_scale=4):
 def get_avg_pk_loss_chi2_pk(pk_gen, pk_targ, eps=1e-10):
     """Reduced chi^2 between generated and target P(k)"""
     return float(np.mean((pk_gen - pk_targ) ** 2 / (pk_targ**2 + eps)))
+
+
+# def calc_pk(map1, BoxSize=500, MAS='CIC', threads=32, verbose=False):
+#     Pk2D = PKL.Pk_plane(map1, BoxSize, MAS, threads, verbose)
+#     return Pk2D.k, Pk2D.Pk
+
+def calc_avg_pk(maps):
+    pk_avg = None
+    for i in range(len(maps)):
+        #print(f"{i}/{len(maps)}")
+        Pk2D = PKL.Pk_plane(maps[i], BoxSize=500, MAS='CIC', threads=32, verbose=False)
+        k, pk = Pk2D.k, Pk2D.Pk
+        if pk_avg is None:
+            pk_avg = pk.copy()
+        else:
+            pk_avg += pk
+    pk_avg /= len(maps)
+    return k, pk_avg
