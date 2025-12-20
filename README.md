@@ -29,6 +29,7 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
   <br>
   <em>Power spectrum comparison of actual and nuGAN-generated density contrast maps averaged over 1000 maps</em>
 </p>
+
 ---
 
 ## Repository Structure
