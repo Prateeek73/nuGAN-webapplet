@@ -1,9 +1,13 @@
-# nuGAN: Neutrino-Conditioned Wasserstein GAN for Cosmological Maps
+# $\nu$GAN: A Deep Learning Emulator for Cosmic Web Simulations with Massive Neutrinos
 
-![Generated cosmological maps](results/generated_maps/homepage_image1.png)
+![Generated cosmological maps](results/sample_maps2.png)
+
+This is a **PyTorch implementation of $\nu$GAN, a conditional Wasserstein GAN (WGAN-GP)** designed to generate 2D cosmological maps conditioned on neutrino masses. The training pipeline supports spectral loss regularization, gradient penalty, multi-GPU training, and flexible optimization schedules.
+
+![Generated cosmological maps](results/sample_maps.png)
 
 
-This is a **PyTorch implementation of a conditional Wasserstein GAN (WGAN-GP)** designed to generate high-dimensional cosmological maps conditioned on neutrino masses. The training pipeline supports spectral loss regularization, gradient penalty, multi-GPU training, and flexible optimization schedules.
+
 
 ---
 
@@ -15,19 +19,20 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 - Uses Wasserstein loss with gradient penalty
 - Incorporates a power-spectrum–based spectral loss
 - Saves best models based on multiple criteria (G loss, G+D loss, power spectrum loss)
+<br><br>
 
 <p align="center">
-  <img src="results/graphs/sample_maps_comparison.png" width="1500">
+  <img src="results/power_spectra.png" width="1500">
   <br>
-  <em>A comparison of actual and nuGAN-generated density contrast maps</em>
+  <em>Mean power spectrum for 1000 samples</em>
 </p>
 
 <br><br>
 
 <p align="center">
-  <img src="results/graphs/avg_pk_over_1000_maps.png" width="1500">
+  <img src="results/pixel_intensity.png" width="1500">
   <br>
-  <em>Power spectrum comparison of actual and nuGAN-generated density contrast maps averaged over 1000 maps</em>
+  <em>Mean pixel intensity histogram for 1000 samples</em>
 </p>
 
 ---
@@ -40,9 +45,25 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 ├── utils.py        # Helper utilities
 ├── models.py       # Generator and Critic architectures
 ├── run.sh          # Example shell script for running training script
+├── infer.ipynb     # Example notebook for inference
+├── env.yml         # Conda environment file
 ├── README.md
 
 ```
+
+---
+
+## Data
+
+The data is hosted at 10.5281/zenodo.18026531 and contains the datasets and pretrained model checkpoint used in the paper. The data includes processed 2D density maps and corresponding neutrino mass labels used for traiing. Note that the training maps are normalized to [-1,1]. The model checkpoint (both in raw format and state_dict) corresponds to trained $\nu$GAN used in the analysis presented in the associated manuscript (See the paper for more details). Checkpoints and data should be moved to `/nugan/checkpoints/` and `/nugan/data/` to be used for inference and training. The data and model are provided without restrictions and may be used for research and educational purposes. 
+
+<p align="center">
+  <img src="results/data_distribution.png" width="500">
+
+  <br>
+  <em>Pixel intensity distribution for 15,000 training data maps of shape (256,256). Note the high variance at the right tail.</em>
+</p>
+
 
 ## Requirements
 
