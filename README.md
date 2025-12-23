@@ -55,7 +55,7 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 
 ## Data
 
-The data is hosted at 10.5281/zenodo.18026531 and contains the datasets and pretrained model checkpoint used in the paper. The data includes processed 2D density maps and corresponding neutrino mass labels used for traiing. Note that the training maps are normalized to [-1,1]. The model checkpoint (both in raw format and state_dict) corresponds to trained νGAN used in the analysis presented in the associated manuscript (See the paper for more details). Checkpoints and data should be moved to `/nugan/checkpoints/` and `/nugan/data/` to be used for inference and training. The data and model are provided without restrictions and may be used for research and educational purposes. 
+The data and trained model are hosted at https://doi.org/10.5281/zenodo.18026531. The data includes processed 2D density maps and corresponding neutrino mass labels used for training. Note that the training maps are normalized to [-1,1]. The model checkpoint (pytorch state_dict) corresponds to trained νGAN used in the analysis presented in the associated manuscript (See the paper for more details). Checkpoints and data should be moved to `/nugan/checkpoints/` and `/nugan/data/` to be used for inference and training. The data and model are provided without restrictions and may be used for research and educational purposes. 
 
 <p align="center">
   <img src="results/data_distribution.png" width="500">
