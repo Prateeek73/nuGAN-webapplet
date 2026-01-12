@@ -1,10 +1,10 @@
 # νGAN: A Deep Learning Emulator for Cosmic Web Simulations with Massive Neutrinos
 
-![Generated cosmological maps](results/sample_maps2.png)
+![Generated cosmological maps](plots/processed_for_paper/sample_maps2.png)
 
 This is a **PyTorch implementation of νGAN, a conditional Wasserstein GAN (WGAN-GP)** designed to generate 2D cosmological maps conditioned on neutrino masses. The training pipeline supports spectral loss regularization, gradient penalty, multi-GPU training, and flexible optimization schedules.
 
-![Generated cosmological maps](plots/processed_for_paper/sample_maps2.png)
+![Generated cosmological maps](plots/processed_for_paper/sample_maps.png)
 
 
 
