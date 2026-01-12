@@ -4,7 +4,7 @@
 
 This is a **PyTorch implementation of νGAN, a conditional Wasserstein GAN (WGAN-GP)** designed to generate 2D cosmological maps conditioned on neutrino masses. The training pipeline supports spectral loss regularization, gradient penalty, multi-GPU training, and flexible optimization schedules.
 
-![Generated cosmological maps](results/sample_maps_1.png)
+![Generated cosmological maps](plots/processed_for_paper/sample_maps2.png)
 
 
 
@@ -22,7 +22,7 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 <br><br>
 
 <p align="center">
-  <img src="results/power_spectra.png" width="1500">
+  <img src="plots/processed_for_paper/power_spectra.png" width="1500">
   <br>
   <em>Mean power spectrum for 1000 samples</em>
 </p>
@@ -30,7 +30,7 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 <br><br>
 
 <p align="center">
-  <img src="results/pixel_intensity.png" width="1500">
+  <img src="plots/processed_for_paper/pixel_intensity.png" width="1500">
   <br>
   <em>Mean pixel intensity histogram for 1000 samples</em>
 </p>
@@ -58,7 +58,7 @@ The main training script (`train.py`) trains a neutrino-conditioned GAN that:
 The data and trained model are hosted at https://doi.org/10.5281/zenodo.18026531. The data includes processed 2D density maps and corresponding neutrino mass labels used for training. Note that the training maps are normalized to [-1,1]. The model checkpoint (pytorch state_dict) corresponds to trained νGAN used in the analysis presented in the associated manuscript (See the paper for more details). Checkpoints and data should be moved to `/nugan/checkpoints/` and `/nugan/data/` to be used for inference and training. The data and model are provided without restrictions and may be used for research and educational purposes. 
 
 <p align="center">
-  <img src="results/data_distribution.png" width="500">
+  <img src="plots/processed_for_paper/data_distribution.png" width="500">
 
   <br>
   <em>Pixel intensity distribution for 15,000 training data maps of shape (256,256). Note the high variance at the right tail.</em>
