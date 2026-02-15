@@ -1,0 +1,10 @@
+# Flask backend requirements for nuGAN web applet
+flask>=3.0.0
+flask-cors>=4.0.0
+flask-limiter>=3.5.0
+numpy>=1.26.0
+torch>=2.2.0
+Pillow>=10.0.0
+matplotlib>=3.8.0
+python-dotenv>=1.0.0
+gunicorn>=21.2.0
