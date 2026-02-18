@@ -37,7 +37,10 @@ BACKEND_ENV = {}
 
 # Ports (set dynamically)
 BACKEND_PORT = int(os.environ.get("PORT", 5000))
-FRONTEND_PORT = 3000
+# Allow overriding the listen host (use HOST or BACKEND_HOST). Default keeps previous behavior
+BACKEND_HOST = os.environ.get("HOST", os.environ.get("BACKEND_HOST", "127.0.0.1"))
+FRONTEND_PORT = int(os.environ.get("FRONTEND_PORT", 3000))
+FRONTEND_HOST = os.environ.get("FRONTEND_HOST", "127.0.0.1")
 
 # ===================
 # Utility Functions
@@ -47,8 +50,8 @@ def print_banner(mode):
     print("\n" + "=" * 60)
     print(f"  νGAN Web Applet - {mode.title()} Server")
     print("=" * 60)
-    print(f"  Backend:  http://localhost:{BACKEND_PORT}")
-    print(f"  Frontend: http://localhost:{FRONTEND_PORT}")
+    print(f"  Backend:  http://{BACKEND_HOST}:{BACKEND_PORT}")
+    print(f"  Frontend: http://{FRONTEND_HOST}:{FRONTEND_PORT}")
     print("=" * 60 + "\n")
 
 
@@ -117,9 +120,9 @@ def run_backend(dev_mode=True):
     env = os.environ.copy()
     env.update(BACKEND_ENV)
     if dev_mode:
-        print(f"[Backend] Starting Flask (dev) on port {BACKEND_PORT}...")
+        print(f"[Backend] Starting Flask (dev) on {BACKEND_HOST}:{BACKEND_PORT}...")
         return subprocess.Popen(
-            [python_exe, "-m", "flask", "run", "--host=0.0.0.0", f"--port={BACKEND_PORT}"],
+            [python_exe, "-m", "flask", "run", f"--host={BACKEND_HOST}", f"--port={BACKEND_PORT}"],
             cwd=BACKEND_DIR,
             env=env,
             stdout=subprocess.PIPE,
@@ -131,9 +134,9 @@ def run_backend(dev_mode=True):
         gunicorn_path = which("gunicorn")
         if not gunicorn_path:
             raise RuntimeError("[Backend] Gunicorn is not installed. Run 'pip install gunicorn'.")
-        print(f"[Backend] Starting Gunicorn (prod) on port {BACKEND_PORT}...")
+        print(f"[Backend] Starting Gunicorn (prod) on {BACKEND_HOST}:{BACKEND_PORT}...")
         return subprocess.Popen(
-            [gunicorn_path, "-w", "4", "-b", f"0.0.0.0:{BACKEND_PORT}", "wsgi:app"],
+            [gunicorn_path, "-w", "4", "-b", f"{BACKEND_HOST}:{BACKEND_PORT}", "wsgi:app"],
             cwd=ROOT_DIR,
             env=env,
             stdout=subprocess.PIPE,
@@ -148,6 +151,7 @@ def run_frontend(dev_mode=True):
     npm = get_npm_command()
     env = os.environ.copy()
     env["FORCE_COLOR"] = "1"
+    python_exe = get_python_executable()
     if dev_mode:
         print(f"[Frontend] Starting Vite (dev) on port {FRONTEND_PORT}...")
         return subprocess.Popen(

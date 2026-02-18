@@ -1,0 +1,21 @@
+[Unit]
+Description=nuGAN backend (Gunicorn)
+After=network.target
+
+[Service]
+# Service runs as the specified non-root user
+User=prasingh
+Group=prasingh
+WorkingDirectory=/data/projects_website/nugan/applet/backend
+
+# Put environment variables in /etc/nugan.env (see README)
+EnvironmentFile=/etc/nugan.env
+
+# Gunicorn executable inside the virtualenv; adjust if needed
+ExecStart=/data/projects_website/nugan/applet/backend/venv/bin/gunicorn -w 4 -b 0.0.0.0:2224 app:app
+Restart=always
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -296,3 +296,83 @@ python -m unittest tests.test_api -v
   doi       = {10.5281/zenodo.18224158}
 }
 ```
+
+## Deployment (Production)
+
+This project ships a development runner (`applet/run.py`) for local work. For a production-ready backend that runs permanently and exposes a web port, we recommend running the Flask app under `gunicorn` behind `nginx` with `systemd` as the process manager.
+
+Files with examples are provided in `applet/deploy/`:
+
+- `applet/deploy/nuGAN-backend.service` — example `systemd` unit that runs `gunicorn` (adjust paths and user).
+- `applet/deploy/nginx.nuGAN.conf` — example `nginx` site that proxies `/api/` to the local Gunicorn instance.
+
+Quick deployment steps (Ubuntu/Debian style):
+
+1. Create a dedicated system user and clone the repo:
+
+```bash
+sudo adduser --system --group --no-create-home nugan
+sudo mkdir -p /srv/nuGAN-webapplet
+sudo chown $USER:$USER /srv/nuGAN-webapplet
+git clone <your-repo-url> /srv/nuGAN-webapplet
+cd /srv/nuGAN-webapplet/applet/backend
+```
+
+2. Create a Python virtualenv and install requirements:
+
+```bash
+python3 -m venv venv
+./venv/bin/pip install --upgrade pip
+./venv/bin/pip install -r requirements.txt
+```
+
+3. Create an environment file for production variables (example `/etc/nugan.env`):
+
+```ini
+# /etc/nugan.env
+FLASK_ENV=production
+PORT=8000
+ALLOWED_ORIGINS=your-frontend-domain.com
+NUGAN_SEED=42
+# Any other env vars required by your deployment
+```
+
+Set secure ownership:
+
+```bash
+sudo chown root:root /etc/nugan.env
+sudo chmod 640 /etc/nugan.env
+```
+
+4. Install `gunicorn` into the venv (if not already) and test locally:
+
+```bash
+./venv/bin/gunicorn -w 4 -b 127.0.0.1:8000 app:app
+# Visit http://localhost:8000/api/health to verify
+```
+
+5. Copy the example `systemd` unit and enable the service (adjust paths/user if needed):
+
+```bash
+sudo cp applet/deploy/nuGAN-backend.service /etc/systemd/system/nugan.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now nugan.service
+sudo journalctl -u nugan.service -f
+```
+
+6. Configure `nginx` to proxy `/api/` to the backend. Copy the example site and enable it:
+
+```bash
+sudo cp applet/deploy/nginx.nuGAN.conf /etc/nginx/sites-available/nuGAN
+sudo ln -s /etc/nginx/sites-available/nuGAN /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+7. (Optional but recommended) Obtain TLS with Certbot and force HTTPS.
+
+Security notes:
+- Run the service under a dedicated non-root user. Keep model weights and data readable only by that user.
+- Restrict `ALLOWED_ORIGINS` to your frontend domain(s) in production.
+- Use a firewall to expose only ports 80/443 to the public and keep the Gunicorn port bound to localhost.
+
+If you want, I can create a tailored `systemd` unit with exact paths for your server location, and test-adjust the `nginx` snippet to match your domain and TLS setup.
